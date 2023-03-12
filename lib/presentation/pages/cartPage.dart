@@ -25,7 +25,7 @@ class _CartPageState extends State<CartPage> {
           if (state is itemInitialState) {
             return const Center(
                 child: Text(
-              "NO HISTORY TO SHOW!\n TOTAL: 0\$",
+              "NO HISTORY !",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 20,
@@ -123,7 +123,7 @@ class _CartPageState extends State<CartPage> {
                     child: Text(
                       "TOTAL: ${TotalPrice.toStringAsFixed(2)}\$",
                       style: const TextStyle(
-                          fontSize: 30, fontWeight: FontWeight.w400),
+                          fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],

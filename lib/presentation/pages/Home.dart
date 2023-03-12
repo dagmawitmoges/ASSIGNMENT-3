@@ -16,6 +16,22 @@ class item extends StatefulWidget {
 }
 
 class _itemState extends State<item> {
+  int _count = 1;
+
+  void _increment(){
+    setState((){
+      _count++;
+    });
+  }
+
+  void _decrement(){
+    if(_count < 2){
+      return;
+    }
+    setState(() {
+      _count--;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,11 +68,11 @@ class _itemState extends State<item> {
                 Image.network(
                     'https://media.istockphoto.com/id/1224326999/photo/pepper-bag-full-of-groceries.jpg?s=612x612&w=0&k=20&c=TAiEPlrW85SMUv3tL0YB8FGKytOlxlc1OdilADMvUVM='),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(50,100,0,0),
+                      padding: const EdgeInsets.fromLTRB(50,30,0,0),
                       child: Text('Go crazy over our insanely affordable prices.',style: TextStyle(fontSize: 40,fontWeight:FontWeight.bold),),
                     ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 200),
+                  padding: const EdgeInsets.only(top: 100),
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white30,
@@ -75,6 +91,7 @@ class _itemState extends State<item> {
             return Text(state.message);
           } else if (state is itemSuccessState) {
             return ListView.builder(
+              
               itemCount: state.activity.length,
               itemBuilder: (BuildContext context, int index) {
                 final items = state.activity[index];
@@ -85,141 +102,100 @@ class _itemState extends State<item> {
                     child: Row(
                       children: [
                         Center(
-                          child: Card(
-                            color: Colors.white38,
-                            child: Padding(
-                              padding: const EdgeInsets.all(9.0),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    width: 200,
-                                    child: Image.network(
-                                      items.image,
-                                      fit: BoxFit.fill,
+                          child: SizedBox(
+                            child: Card(
+                              color: Colors.white38,
+                              child: Padding(
+                                padding: const EdgeInsets.all(9.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                     width: MediaQuery.of(context).size.width*.4,
+                                      child: Image.network(
+                                        items.image,
+                                        fit: BoxFit.fill,
+                                      ),
                                     ),
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Center(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              SizedBox(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    .4,
-                                                child: Text(
-                                                  items.title,
-                                                  style:
-                                                      TextStyle(fontSize: 18),
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Center(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      .4,
+                                                  child: Text(
+                                                    items.title,
+                                                    style:
+                                                        TextStyle(fontSize: 18),
+                                                  ),
                                                 ),
-                                              ),
-                                              SizedBox(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    .1,
-                                                child: Text(
-                                                  '${items.price}', // Replace with actual price
-                                                  style:
-                                                      TextStyle(fontSize: 16),
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      .1,
+                                                  child: Text(
+                                                    '${items.price}', // Replace with actual price
+                                                    style:
+                                                        TextStyle(fontSize: 16),
+                                                  ),
                                                 ),
-                                              ),
-                                              SizedBox(height: 10),
-                                              ElevatedButton(
-                                                onPressed: () {
-                                                  BlocProvider.of<itemBloc>(
-                                                          context)
-                                                      .add(CartHistoryEvent(
-                                                          asbeza: items));
-                                                  // Implement add to cart functionality
-                                                },
-                                                style: ElevatedButton.styleFrom(
-                                                    primary: Colors.green),
-                                                child: Text('Add to Cart'),
-                                              ),
-                                            ],
+                                                SizedBox(height: 10),
+                                                Column(
+                                                  children: [
+                                                    ElevatedButton(
+                                                      onPressed: () {
+                                                        BlocProvider.of<itemBloc>(
+                                                                context)
+                                                            .add(CartHistoryEvent(
+                                                                asbeza: items));
+                                                        // Implement add to cart functionality
+                                                      },
+                                                      style: ElevatedButton.styleFrom(
+                                                          primary: Colors.green),
+                                                      child: Text('Add to Cart'),
+                                                    ),
+                                                 Row(
+                                                   children: [
+                                                     IconButton(onPressed: (() {
+                                    _decrement();
+                                  }), icon: const Icon(Icons.remove_circle), color: Colors.green, iconSize: 30,),
+                                                  Text("${_count}", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                                  ),IconButton(onPressed: (() {
+                                    _increment();
+                                  }), 
+                                  icon: const Icon(Icons.add_circle), 
+                                  color: Colors.green, iconSize: 30,),
+
+                                   ],
+                                                 ),
+                                   
+                                  
+                                   ],
+                                                ),
+                                                
+                                              ],
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ),
-                        // Card(
-                        //   color: Colors.white38,
-                        //   child: Padding(
-                        //     padding: const EdgeInsets.all(10.0),
-                        //     child: Column(
-                        //       crossAxisAlignment: CrossAxisAlignment.start,
-                        //       children: [
-                        //         SizedBox(
-
-                        //           width:MediaQuery.of(context).size.width*.4,
-                        //           child: Image.network(
-                        //             items.image,
-                        //             fit: BoxFit.cover,
-                        //           ),
-                        //         ),
-                        //         Center(
-                        //           child: Padding(
-                        //             padding: const EdgeInsets.all(8.0),
-                        //             child: Column(
-                        //               crossAxisAlignment:
-                        //                   CrossAxisAlignment.start,
-                        //               children: [
-                        //                 SizedBox(
-                        //                   width: MediaQuery.of(context).size.width* .4,
-                        //                   child: Text(
-                        //                     items.title,
-
-                        //                     style:
-                        //                      TextStyle(fontSize: 18)
-                        //                   ,
-
-                        //                   ),
-                        //                 ),
-                        //                 SizedBox(height: 5),
-                        //                 Text(
-                        //                   'Description',
-                        //                   style: TextStyle(color: Colors.grey),
-                        //                 ),
-                        //                 SizedBox(height: 5),
-                        //                 Text(
-                        //                   '\$10.00', // Replace with actual price
-                        //                   style: TextStyle(fontSize: 16),
-                        //                 ),
-                        //                 SizedBox(height: 10),
-                        //                 ElevatedButton(
-                        //                   onPressed: () {
-                        //                     Navigator.push(
-                        //                         context,
-                        //                         MaterialPageRoute(
-                        //                             builder: (context) =>
-                        //                                 CartPage()));
-                        //                     // Implement add to cart functionality
-                        //                   },
-                        //                   style: ElevatedButton.styleFrom(
-                        //                       primary: Colors.green),
-                        //                   child: Text('Add to Cart'),
-                        //                 ),
-                        //               ],
-                        //             ),
-                        //           ),
-                        //         ),
-                        //       ],
-                        //     ),
-                        //   ),
-                        // ),
+                       
                       ],
                     ),
                   ),
