@@ -41,7 +41,7 @@ class _CartPageState extends State<CartPage> {
             if (state.cartHistory.isEmpty) {
               return const Center(
                   child: Text(
-                "NO HISTORY TO SHOW!\n TOTAL: 0\$",
+                "NO HISTORY",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 20,
