@@ -1,3 +1,4 @@
+import 'package:asbeza/presentation/pages/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:asbeza/model/item.dart';
@@ -21,32 +22,52 @@ class _itemState extends State<item> {
       appBar: AppBar(
         title: const Text('Asbeza'),
         foregroundColor: Colors.black,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.white24,
         actions: [
-          Icon(
-            Icons.account_box,
+          ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.white24),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ProfilePage()));
+            },
+            icon: Icon(Icons.person_2_outlined),
+            label: Text('Profile'),
           ),
-          IconButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => CartPage()));
-              },
-              icon: Icon(Icons.shopping_bag_outlined))
+          ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.white24),
+            onPressed: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => CartPage()));
+            },
+            icon: Icon(Icons.shopping_bag_outlined),
+            label: Text('Cart'),
+          )
         ],
       ),
       body: Center(
         child: BlocBuilder<itemBloc, itemState>(builder: (context, state) {
           if (state is itemInitialState) {
-            return Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              alignment: Alignment.center,
-              child: ElevatedButton(
-                  onPressed: () {
-                    BlocProvider.of<itemBloc>(context)
-                        .add(GetDataButtonPressed());
-                  },
-                  child: const Text('Get Activity')),
+            return Column(
+              children: [
+                Image.network(
+                    'https://media.istockphoto.com/id/1224326999/photo/pepper-bag-full-of-groceries.jpg?s=612x612&w=0&k=20&c=TAiEPlrW85SMUv3tL0YB8FGKytOlxlc1OdilADMvUVM='),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(50,100,0,0),
+                      child: Text('Go crazy over our insanely affordable prices.',style: TextStyle(fontSize: 40,fontWeight:FontWeight.bold),),
+                    ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 200),
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white30,
+                          fixedSize: Size(320, 80)),
+                      onPressed: () {
+                        BlocProvider.of<itemBloc>(context)
+                            .add(GetDataButtonPressed());
+                      },
+                      child: const Text('Get Your Asbeza')),
+                ),
+              ],
             );
           } else if (state is itemLoadingState) {
             return const Center(child: CircularProgressIndicator());

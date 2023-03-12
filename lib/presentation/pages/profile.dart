@@ -8,8 +8,8 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  String _name = '';
-  String _phoneNumber = '';
+  String _name = 'ertyui';
+  String _phoneNumber = '345678';
 
   @override
   void initState() {
@@ -30,42 +30,41 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white24,
         title: Text('Profile'),
       ),
       body: Container(
         padding: EdgeInsets.all(16.0),
-        child: Column(
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Name:',
-              style: TextStyle(
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold,
-              ),
+            Icon(
+              Icons.person,
+              size: 150,
             ),
-            SizedBox(height: 8.0),
-            Text(
-              _name,
-              style: TextStyle(
-                fontSize: 16.0,
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Text(
+                  'Name: ' + _name,
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
-            ),
-            SizedBox(height: 16.0),
-            Text(
-              'Phone Number:',
-              style: TextStyle(
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold,
+              SizedBox(height: 34.0),
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Text(
+                  'Phone Number: ' + _phoneNumber,
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
-            ),
-            SizedBox(height: 8.0),
-            Text(
-              _phoneNumber,
-              style: TextStyle(
-                fontSize: 16.0,
-              ),
-            ),
+            ]),
           ],
         ),
       ),
