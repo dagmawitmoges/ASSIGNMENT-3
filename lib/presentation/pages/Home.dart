@@ -63,28 +63,30 @@ class _itemState extends State<item> {
       body: Center(
         child: BlocBuilder<itemBloc, itemState>(builder: (context, state) {
           if (state is itemInitialState) {
-            return Column(
-              children: [
-                Image.network(
-                    'https://media.istockphoto.com/id/1224326999/photo/pepper-bag-full-of-groceries.jpg?s=612x612&w=0&k=20&c=TAiEPlrW85SMUv3tL0YB8FGKytOlxlc1OdilADMvUVM='),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(50,30,0,0),
-                      child: Text('Go crazy over our insanely affordable prices.',style: TextStyle(fontSize: 40,fontWeight:FontWeight.bold),),
-                    ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 100),
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white30,
-                          fixedSize: Size(320, 80)),
-                      onPressed: () {
-                        BlocProvider.of<itemBloc>(context)
-                            .add(GetDataButtonPressed());
-                      },
-                      child: const Text('Get Your Asbeza')),
-                ),
-              ],
-            );
+             BlocProvider.of<itemBloc>(context)
+                           .add(GetDataButtonPressed());
+            // return Column(
+            //   children: [
+            //     Image.network(
+            //         'https://media.istockphoto.com/id/1224326999/photo/pepper-bag-full-of-groceries.jpg?s=612x612&w=0&k=20&c=TAiEPlrW85SMUv3tL0YB8FGKytOlxlc1OdilADMvUVM='),
+            //         Padding(
+            //           padding: const EdgeInsets.fromLTRB(50,30,0,0),
+            //           child: Text('Go crazy over our insanely affordable prices.',style: TextStyle(fontSize: 40,fontWeight:FontWeight.bold),),
+            //         ),
+            //     Padding(
+            //       padding: const EdgeInsets.only(top: 100),
+            //       child: ElevatedButton(
+            //           style: ElevatedButton.styleFrom(
+            //               backgroundColor: Colors.white30,
+            //               fixedSize: Size(320, 80)),
+            //           onPressed: () {
+            //             BlocProvider.of<itemBloc>(context)
+            //                 .add(GetDataButtonPressed());
+            //           },
+            //           child: const Text('Get Your Asbeza')),
+            //     ),
+            //   ],
+            // );
           } else if (state is itemLoadingState) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is itemFailState) {
