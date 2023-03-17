@@ -2,6 +2,7 @@ import 'package:asbeza/presentation/pages/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:asbeza/model/item.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../bloc/item_bloc.dart';
 import '../../bloc/item_event.dart';
@@ -17,21 +18,36 @@ class item extends StatefulWidget {
 
 class _itemState extends State<item> {
   int _count = 1;
+@override
+  void initState() {
+    super.initState();
+    _loadCounter();
+  }
 
-  void _increment(){
-    setState((){
-      _count++;
+  Future<void> _loadCounter() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _count = (prefs.getInt('count') ?? 1);
+    });
+  }
+  Future<void> _increment() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _count = (prefs.getInt('count') ?? 0);_count++;
+      prefs.setInt('count', _count);
+      //
     });
   }
 
-  void _decrement(){
-    if(_count < 2){
+  void _decrement() {
+    if (_count < 2) {
       return;
     }
     setState(() {
       _count--;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,8 +79,7 @@ class _itemState extends State<item> {
       body: Center(
         child: BlocBuilder<itemBloc, itemState>(builder: (context, state) {
           if (state is itemInitialState) {
-             BlocProvider.of<itemBloc>(context)
-                           .add(GetDataButtonPressed());
+            BlocProvider.of<itemBloc>(context).add(GetDataButtonPressed());
             // return Column(
             //   children: [
             //     Image.network(
@@ -93,7 +108,6 @@ class _itemState extends State<item> {
             return Text(state.message);
           } else if (state is itemSuccessState) {
             return ListView.builder(
-              
               itemCount: state.activity.length,
               itemBuilder: (BuildContext context, int index) {
                 final items = state.activity[index];
@@ -113,7 +127,8 @@ class _itemState extends State<item> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     SizedBox(
-                                     width: MediaQuery.of(context).size.width*.4,
+                                      width: MediaQuery.of(context).size.width *
+                                          .4,
                                       child: Image.network(
                                         items.image,
                                         fit: BoxFit.fill,
@@ -156,35 +171,55 @@ class _itemState extends State<item> {
                                                   children: [
                                                     ElevatedButton(
                                                       onPressed: () {
-                                                        BlocProvider.of<itemBloc>(
+                                                        BlocProvider.of<
+                                                                    itemBloc>(
                                                                 context)
-                                                            .add(CartHistoryEvent(
-                                                                asbeza: items));
+                                                            .add(
+                                                                CartHistoryEvent(
+                                                                    asbeza:
+                                                                        items));
                                                         // Implement add to cart functionality
                                                       },
-                                                      style: ElevatedButton.styleFrom(
-                                                          primary: Colors.green),
-                                                      child: Text('Add to Cart'),
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                              primary:
+                                                                  Colors.green),
+                                                      child:
+                                                          Text('Add to Cart'),
                                                     ),
-                                                 Row(
-                                                   children: [
-                                                     IconButton(onPressed: (() {
-                                    _decrement();
-                                  }), icon: const Icon(Icons.remove_circle), color: Colors.green, iconSize: 30,),
-                                                  Text("${_count}", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-                                  ),IconButton(onPressed: (() {
-                                    _increment();
-                                  }), 
-                                  icon: const Icon(Icons.add_circle), 
-                                  color: Colors.green, iconSize: 30,),
-
-                                   ],
-                                                 ),
-                                   
-                                  
-                                   ],
+                                                    Row(
+                                                      children: [
+                                                        IconButton(
+                                                          onPressed: (() {
+                                                            _decrement();
+                                                          }),
+                                                          icon: const Icon(Icons
+                                                              .remove_circle),
+                                                          color: Colors.green,
+                                                          iconSize: 30,
+                                                        ),
+                                                        Text(
+                                                          "${_count}",
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color:
+                                                                  Colors.black),
+                                                        ),
+                                                        IconButton(
+                                                          onPressed: (() {
+                                                            _increment();
+                                                          }),
+                                                          icon: const Icon(
+                                                              Icons.add_circle),
+                                                          color: Colors.green,
+                                                          iconSize: 30,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
                                                 ),
-                                                
                                               ],
                                             ),
                                           ),
@@ -197,7 +232,6 @@ class _itemState extends State<item> {
                             ),
                           ),
                         ),
-                       
                       ],
                     ),
                   ),
