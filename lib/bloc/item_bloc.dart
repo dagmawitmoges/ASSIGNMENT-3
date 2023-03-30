@@ -9,6 +9,7 @@ import 'package:asbeza/model/item.dart';
 import '../Service/apiService.dart';
 import 'item_state.dart';
 import '../bloc/item_state.dart';
+
 class itemBloc extends Bloc<itemEvent, itemState> {
   final _apiServiceProvider = ApiServiceProvider();
   final _service = Service();
@@ -22,8 +23,8 @@ class itemBloc extends Bloc<itemEvent, itemState> {
             cartHistory = val,
           });
       historyLoad = item.historyList(cartHistory);
-      emit(itemSuccessState( activity:activity!,cartHistory: historyLoad));
-      
+      print(historyLoad);
+      emit(itemSuccessState(activity: activity!, cartHistory: historyLoad));
     });
     on<CartHistoryEvent>((event, emit) => {
           historyLoad.add(event.data),

@@ -76,7 +76,7 @@ class item {
     json['price'] = price;
     json['description'] = description;
     json['category'] = category;
-    json['category'] = image;
+    json['image'] = image;
     // json['quantity'] = quantity;
     // json['itemAdded'] = itemAdded;
     return json;
