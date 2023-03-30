@@ -19,10 +19,10 @@ class itemSuccessState extends itemState {
   final List activity;
   List cartHistory;
 
-  itemSuccessState(
-    this.activity,
-    this.cartHistory,
-  );
+  itemSuccessState({
+    required this.activity,
+    required this.cartHistory,
+  });
 
   @override
   // TODO: implement props

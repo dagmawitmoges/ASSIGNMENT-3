@@ -18,7 +18,7 @@ class item extends StatefulWidget {
 
 class _itemState extends State<item> {
   int _count = 1;
-@override
+  @override
   void initState() {
     super.initState();
     _loadCounter();
@@ -30,10 +30,12 @@ class _itemState extends State<item> {
       _count = (prefs.getInt('count') ?? 1);
     });
   }
+
   Future<void> _increment() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _count = (prefs.getInt('count') ?? 0);_count++;
+      _count = (prefs.getInt('count') ?? 0);
+      _count++;
       prefs.setInt('count', _count);
       //
     });
@@ -171,6 +173,17 @@ class _itemState extends State<item> {
                                                   children: [
                                                     ElevatedButton(
                                                       onPressed: () {
+                                                        setState(() {
+                                                              for (var item in state
+                                                                  .cartHistory) {
+                                                                if (item.id ==
+                                                                    items.id) {
+                                                                  
+                                                                  continue;
+                                                                  
+                                                                }
+                                                              }
+                                                            });
                                                         BlocProvider.of<
                                                                     itemBloc>(
                                                                 context)
@@ -191,6 +204,7 @@ class _itemState extends State<item> {
                                                       children: [
                                                         IconButton(
                                                           onPressed: (() {
+                                                            
                                                             _decrement();
                                                           }),
                                                           icon: const Icon(Icons
